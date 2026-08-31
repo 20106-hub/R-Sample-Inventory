@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>검체 랙 재고관리 — 연결 중</title>
   <style>
     body{font-family:-apple-system,"Malgun Gothic",sans-serif;background:#0f766e;color:#fff;
@@ -15,32 +16,36 @@
     @keyframes s{to{transform:rotate(360deg)}}
     a.btn{display:inline-block;margin-top:14px;background:#fff;color:#0f766e;text-decoration:none;
       font-weight:700;padding:14px 22px;border-radius:12px;font-size:1rem}
-    code{background:rgba(255,255,255,.15);padding:2px 6px;border-radius:6px;font-size:.8rem;word-break:break-all}
+    .err{background:rgba(0,0,0,.2);border-radius:12px;padding:16px;margin-top:14px;font-size:.9rem}
   </style>
 </head>
 <body>
   <div class="box">
     <h1>검체 랙 재고관리</h1>
-    <div class="spin"></div>
-    <p>스캔 시스템으로 이동 중입니다…</p>
-    <p>자동으로 안 넘어가면 아래 버튼을 누르세요.</p>
-    <a class="btn" id="go" href="#">지금 이동</a>
-    <p style="margin-top:20px;font-size:.8rem;opacity:.7">
-      연결 주소: <code id="url"></code>
-    </p>
+    <div class="spin" id="spin"></div>
+    <p id="msg">스캔 시스템으로 이동 중입니다…</p>
+    <div id="box"></div>
   </div>
 
   <script>
-    /* ================================================================
-       터널 주소가 바뀌면 아래 이 한 줄만 고치고 커밋하세요.
-       (PC 재부팅 후 npm run tunnel 을 다시 실행하면 주소가 바뀝니다)
-       ================================================================ */
-    var TARGET = "https://rolls-lib-efficiency-fridge.trycloudflare.com";
-
-    /* --- 이 아래는 건드리지 마세요 --- */
-    document.getElementById('url').textContent = TARGET;
-    document.getElementById('go').href = TARGET;
-    setTimeout(function () { location.replace(TARGET); }, 800);
+    // url.txt 에 현재 서버(터널) 주소가 들어 있습니다. (PC의 시작.bat 이 자동으로 갱신)
+    fetch('url.txt?_=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.text(); })
+      .then(function (u) {
+        u = (u || '').trim();
+        if (!/^https?:\/\//.test(u)) throw new Error('bad url');
+        var go = document.createElement('a');
+        go.className = 'btn'; go.href = u; go.textContent = '지금 이동';
+        document.getElementById('box').appendChild(go);
+        setTimeout(function () { location.replace(u); }, 600);
+      })
+      .catch(function () {
+        document.getElementById('spin').style.display = 'none';
+        document.getElementById('msg').textContent = '서버 주소를 불러오지 못했습니다.';
+        document.getElementById('box').innerHTML =
+          '<div class="err">PC에서 <b>시작.bat</b> 이 실행 중인지 확인하세요.<br>' +
+          '방금 PC를 켰다면 1~2분 뒤 다시 시도해 주세요.</div>';
+      });
   </script>
 </body>
 </html>
