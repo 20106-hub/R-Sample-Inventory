@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>검체 랙 재고관리 — 연결 중</title>
+  <style>
+    body{font-family:-apple-system,"Malgun Gothic",sans-serif;background:#0f766e;color:#fff;
+      margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .box{max-width:420px;text-align:center}
+    h1{font-size:1.2rem;margin:0 0 8px}
+    p{opacity:.9;font-size:.95rem;line-height:1.5}
+    .spin{width:36px;height:36px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;
+      border-radius:50%;animation:s 1s linear infinite;margin:16px auto}
+    @keyframes s{to{transform:rotate(360deg)}}
+    a.btn{display:inline-block;margin-top:14px;background:#fff;color:#0f766e;text-decoration:none;
+      font-weight:700;padding:14px 22px;border-radius:12px;font-size:1rem}
+    code{background:rgba(255,255,255,.15);padding:2px 6px;border-radius:6px;font-size:.8rem;word-break:break-all}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>검체 랙 재고관리</h1>
+    <div class="spin"></div>
+    <p>스캔 시스템으로 이동 중입니다…</p>
+    <p>자동으로 안 넘어가면 아래 버튼을 누르세요.</p>
+    <a class="btn" id="go" href="#">지금 이동</a>
+    <p style="margin-top:20px;font-size:.8rem;opacity:.7">
+      연결 주소: <code id="url"></code>
+    </p>
+  </div>
+
+  <script>
+    /* ================================================================
+       터널 주소가 바뀌면 아래 이 한 줄만 고치고 커밋하세요.
+       (PC 재부팅 후 npm run tunnel 을 다시 실행하면 주소가 바뀝니다)
+       ================================================================ */
+    var TARGET = "https://operating-katrina-editors-speakers.trycloudflare.com";
+
+    /* --- 이 아래는 건드리지 마세요 --- */
+    document.getElementById('url').textContent = TARGET;
+    document.getElementById('go').href = TARGET;
+    setTimeout(function () { location.replace(TARGET); }, 800);
+  </script>
+</body>
+</html>
