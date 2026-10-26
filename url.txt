@@ -1,1 +1,1 @@
-https://realistic-waters-servers-hobbies.trycloudflare.com
+https://api.trycloudflare.com
