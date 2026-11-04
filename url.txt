@@ -1,1 +1,1 @@
-https://indirect-collar-households-curve.trycloudflare.com
+https://api.trycloudflare.com
